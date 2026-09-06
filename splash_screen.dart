@@ -15,15 +15,25 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Timer? _navigationTimer;
+
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(milliseconds: 900), () {
+
+    _navigationTimer = Timer(const Duration(milliseconds: 900), () {
       if (!mounted) return;
+
       Navigator.of(context).pushReplacementNamed(
         ConnectionMethodScreen.routeName,
       );
     });
+  }
+
+  @override
+  void dispose() {
+    _navigationTimer?.cancel();
+    super.dispose();
   }
 
   @override
