@@ -1,0 +1,32 @@
+[
+  {
+    "name": "GF DNA",
+    "url": "http://mplaygf.space",
+    "priority": 1,
+    "active": true
+  },
+  {
+    "name": "DG PROTV",
+    "url": "http://mplaydg.space",
+    "priority": 2,
+    "active": true
+  },
+  {
+    "name": "AURA TV",
+    "url": "http://auratvplus.com",
+    "priority": 3,
+    "active": true
+  },
+  {
+    "name": "DG PROTV 2",
+    "url": "http://top-pro.pro/",
+    "priority": 4,
+    "active": true
+  },
+  {
+    "name": "AURA TV 2",
+    "url": "http://auratv.top",
+    "priority": 5,
+    "active": true
+  }
+]

@@ -4,69 +4,40 @@ Projeto oficial do **DBob Player**, organizado para desenvolvimento Flutter com 
 
 > Uso recomendado apenas com servidores, listas e conteúdos que você tenha autorização para acessar, distribuir e reproduzir.
 
-## Sprint 01 — Foundation
+## Sprint 02 — Xtream Core
 
-Esta entrega cria a fundação do projeto:
+Esta atualização transforma a base da Sprint 01 em um app funcional de conexão e catálogo:
 
-- Base Flutter oficial gerada por `flutter create`.
-- Arquitetura inicial em camadas.
-- Tema escuro premium.
-- Telas iniciais navegáveis.
-- Configuração interna de servidores.
-- GitHub Actions para gerar APK automaticamente.
-- Scripts CMD para build local no Windows.
+- Login e Senha testando servidores internos por prioridade.
+- Xtream Codes com URL + usuário + senha.
+- Validação real via `player_api.php`.
+- Sessão local com `shared_preferences`.
+- Carregamento de categorias:
+  - TV Ao Vivo
+  - Filmes
+  - Séries
+- Listagem inicial de conteúdos por categoria.
+- Botão de sair da sessão.
+- Botão de atualizar catálogo.
 
-## Estrutura
+## Como subir no GitHub
 
-```text
-.github/workflows/
-assets/config/
-docs/
-lib/src/
-scripts/
-test/
-```
+Copie o conteúdo desta pasta para a raiz do repositório `DbobPLayer`.
 
-## Como usar no GitHub
-
-1. Extraia este ZIP.
-2. Copie tudo para dentro do repositório `marvynhenrique/DbobPLayer`.
-3. Faça commit e push.
+Depois faça commit:
 
 ```bash
 git add .
-git commit -m "Sprint 01: foundation do DBob Player"
+git commit -m "Sprint 02: login real e catalogo Xtream"
 git push
 ```
 
-Após o push, vá em:
+Depois vá em:
 
 ```text
-GitHub > Actions > Build Android APK > Artifacts
+Actions > Build Android APK > Run workflow
 ```
 
-Baixe o APK gerado.
+## Observação de segurança
 
-## Build local pelo CMD
-
-No Windows, com Flutter e Android SDK instalados:
-
-```bat
-scripts\BUILD_DBOB_PLAYER.cmd
-```
-
-O APK será copiado para:
-
-```text
-OUTPUT\DBob_Player_v0.1.0_release.apk
-```
-
-## Próxima sprint
-
-**Sprint 02 — Login, servidores e persistência**
-
-- Persistência local real.
-- Leitura dos servidores internos.
-- Login e senha procurando servidor automaticamente.
-- Xtream Codes com URL + usuário + senha.
-- Estrutura inicial do Xtream Service.
+Nesta Sprint 02 as DNS ainda podem estar no arquivo `assets/config/servers.json`, conforme definido no projeto atual. A proteção/ocultação e atualização remota de servidores fica para a próxima etapa.
