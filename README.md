@@ -1,43 +1,51 @@
 # DBob Player
 
-Projeto oficial do **DBob Player**, organizado para desenvolvimento Flutter com build automático de APK pelo GitHub Actions.
+Projeto oficial do **DBob Player**, organizado para Flutter, Android e GitHub Actions.
 
-> Uso recomendado apenas com servidores, listas e conteúdos que você tenha autorização para acessar, distribuir e reproduzir.
+> Use apenas com servidores, listas e conteúdos que você tenha autorização para acessar, distribuir e reproduzir.
 
-## Sprint 02 — Xtream Core
+## Sprint 03/04 — App Funcional Core
 
-Esta atualização transforma a base da Sprint 01 em um app funcional de conexão e catálogo:
+Esta versão avança o DBob Player para um app funcional de teste:
 
-- Login e Senha testando servidores internos por prioridade.
-- Xtream Codes com URL + usuário + senha.
-- Validação real via `player_api.php`.
-- Sessão local com `shared_preferences`.
-- Carregamento de categorias:
-  - TV Ao Vivo
-  - Filmes
-  - Séries
-- Listagem inicial de conteúdos por categoria.
-- Botão de sair da sessão.
-- Botão de atualizar catálogo.
+- Login real via Xtream.
+- Modo Login e Senha com servidores internos.
+- Modo Xtream Codes manual.
+- Sessão local.
+- TV Ao Vivo.
+- Filmes.
+- Séries com listagem de episódios.
+- Player de vídeo básico.
+- Favoritos.
+- Histórico.
+- Busca local dentro do catálogo carregado.
+- Tela de configurações.
+- Botão de sair.
+- Permissão de internet e tráfego HTTP liberado no Android.
 
-## Como subir no GitHub
+## O que ainda fica para próximas sprints
 
-Copie o conteúdo desta pasta para a raiz do repositório `DbobPLayer`.
+- Download offline real.
+- Chromecast/Cast.
+- EPG/guia de programação.
+- Player avançado com legendas, áudio, qualidade e PiP.
+- Ocultação/remota das DNS.
+- Criptografia da sessão.
 
-Depois faça commit:
+## Como subir
+
+Copie todo o conteúdo desta pasta para a raiz do repositório `DbobPLayer`.
+
+Depois:
 
 ```bash
 git add .
-git commit -m "Sprint 02: login real e catalogo Xtream"
+git commit -m "Sprint 03-04: app funcional core com player"
 git push
 ```
 
-Depois vá em:
+Depois rode:
 
 ```text
 Actions > Build Android APK > Run workflow
 ```
-
-## Observação de segurança
-
-Nesta Sprint 02 as DNS ainda podem estar no arquivo `assets/config/servers.json`, conforme definido no projeto atual. A proteção/ocultação e atualização remota de servidores fica para a próxima etapa.
