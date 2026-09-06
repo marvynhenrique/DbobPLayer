@@ -1,0 +1,116 @@
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  android-apk:
+    name: Build APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Normalize uploaded file structure
+        shell: bash
+        run: |
+          set -e
+
+          mkdir -p lib/src/app
+          mkdir -p lib/src/core/theme
+          mkdir -p lib/src/features/auth/presentation
+          mkdir -p lib/src/features/home/presentation
+          mkdir -p lib/src/features/settings/presentation
+          mkdir -p lib/src/features/splash/presentation
+          mkdir -p lib/src/shared/widgets
+          mkdir -p assets/config
+          mkdir -p test
+          mkdir -p docs
+          mkdir -p scripts
+
+          move_if_exists() {
+            if [ -f "$1" ]; then
+              mv "$1" "$2"
+            fi
+          }
+
+          move_if_exists main.dart lib/main.dart
+          move_if_exists dbob_player_app.dart lib/src/app/dbob_player_app.dart
+          move_if_exists app_theme.dart lib/src/core/theme/app_theme.dart
+          move_if_exists connection_method_screen.dart lib/src/features/auth/presentation/connection_method_screen.dart
+          move_if_exists login_password_screen.dart lib/src/features/auth/presentation/login_password_screen.dart
+          move_if_exists xtream_codes_screen.dart lib/src/features/auth/presentation/xtream_codes_screen.dart
+          move_if_exists sync_screen.dart lib/src/features/auth/presentation/sync_screen.dart
+          move_if_exists home_screen.dart lib/src/features/home/presentation/home_screen.dart
+          move_if_exists settings_screen.dart lib/src/features/settings/presentation/settings_screen.dart
+          move_if_exists splash_screen.dart lib/src/features/splash/presentation/splash_screen.dart
+          move_if_exists dbob_logo.dart lib/src/shared/widgets/dbob_logo.dart
+          move_if_exists section_title.dart lib/src/shared/widgets/section_title.dart
+          move_if_exists servers.json assets/config/servers.json
+          move_if_exists ARCHITECTURE.md docs/ARCHITECTURE.md
+          move_if_exists GITHUB_ACTIONS.md docs/GITHUB_ACTIONS.md
+          move_if_exists ROADMAP.md docs/ROADMAP.md
+          move_if_exists BUILD_DBOB_PLAYER.cmd scripts/BUILD_DBOB_PLAYER.cmd
+          move_if_exists INSTALL_EMULATOR.cmd scripts/INSTALL_EMULATOR.cmd
+          move_if_exists BOOTSTRAP_ANDROID.cmd scripts/BOOTSTRAP_ANDROID.cmd
+
+          cat > test/widget_test.dart <<'DART'
+          import 'package:dbob_player/src/app/dbob_player_app.dart';
+          import 'package:flutter_test/flutter_test.dart';
+
+          void main() {
+            testWidgets('DBob Player starts', (tester) async {
+              await tester.pumpWidget(const DBobPlayerApp());
+              expect(find.textContaining('DBob'), findsWidgets);
+            });
+          }
+          DART
+
+          echo "Estrutura normalizada:"
+          find lib assets test -maxdepth 6 -type f | sort
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Generate Android scaffold
+        run: flutter create --project-name dbob_player --org br.com.dbob --platforms=android .
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Analyze project
+        run: flutter analyze --no-fatal-infos
+
+      - name: Run tests
+        run: flutter test
+
+      - name: Build debug APK
+        run: flutter build apk --debug
+
+      - name: Build release APK
+        run: flutter build apk --release
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v6
+        with:
+          name: DBob-Player-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+
+      - name: Upload release APK
+        uses: actions/upload-artifact@v6
+        with:
+          name: DBob-Player-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
